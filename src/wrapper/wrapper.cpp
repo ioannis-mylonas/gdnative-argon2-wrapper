@@ -32,6 +32,7 @@ String ArgonWrapper::argon_hash(String password, String salt, int t_cost, int m_
 
   char hash[DEFAULT_ENCODED_LEN];
 
+  // Pointer to any of the Argon2 high-level API methods
   int (*target_fun)(
     uint32_t t_cost,
     uint32_t m_cost,
@@ -45,6 +46,7 @@ String ArgonWrapper::argon_hash(String password, String salt, int t_cost, int m_
     size_t encodedlen
   );
 
+  // Check which Argon2 variant is desired, return empty godot::String if invalid and prints an error
   if (strcmp(variant_data.get_data(), "i") == 0) {
     target_fun = &argon2i_hash_encoded;
   } else if (strcmp(variant_data.get_data(), "d") == 0) {
@@ -56,6 +58,7 @@ String ArgonWrapper::argon_hash(String password, String salt, int t_cost, int m_
     return String("");
   }
 
+  // Use function pointer to the correct high-level API variant
   int result = target_fun(
     t_cost,
     1<<m_cost,
@@ -69,12 +72,14 @@ String ArgonWrapper::argon_hash(String password, String salt, int t_cost, int m_
     DEFAULT_ENCODED_LEN
   );
 
+  // Return empty string if operation failed, prints said error
   if (result != ARGON2_OK) {
     String error = String(argon2_error_message(result));
     Godot::print(error);
     return String("");
   }
 
+  // Return godot::String with encoded hash
   return String(hash);
 }
 
