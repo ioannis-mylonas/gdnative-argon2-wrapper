@@ -2,17 +2,17 @@
 
 using namespace godot;
 
-ArgonWrapper::ArgonWrapper() {}
+Argon2Wrapper::Argon2Wrapper() {}
 
-ArgonWrapper::~ArgonWrapper() {}
+Argon2Wrapper::~Argon2Wrapper() {}
 
-void ArgonWrapper::_init() {}
+void Argon2Wrapper::_init() {}
 
-void ArgonWrapper::_register_methods() {
-  register_method("_init", &ArgonWrapper::_init);
+void Argon2Wrapper::_register_methods() {
+  register_method("_init", &Argon2Wrapper::_init);
 
-  register_method("argon_hash", &ArgonWrapper::argon_hash);
-  register_method("argon_verify", &ArgonWrapper::argon_verify);
+  register_method("argon2_hash", &Argon2Wrapper::argon2_hash);
+  register_method("argon2_verify", &Argon2Wrapper::argon2_verify);
 }
 
 /**
@@ -25,7 +25,7 @@ void ArgonWrapper::_register_methods() {
  * @param variant Variant to be used. Can be i, d or id
  * @pre Returns an empty string on failure, or an encoded hash upon success
  */
-String ArgonWrapper::argon_hash(String password, String salt, int t_cost, int m_cost, int parallelism, String variant) {
+String Argon2Wrapper::argon2_hash(String password, String salt, int t_cost, int m_cost, int parallelism, String variant) {
   CharString pass_data = password.utf8();
   CharString salt_data = salt.utf8();
   CharString variant_data = variant.utf8();
@@ -91,19 +91,20 @@ String ArgonWrapper::argon_hash(String password, String salt, int t_cost, int m_
  * @pre Returns false if the password does not check out, or no valid hash type has been passed
  * @pre Returns true if the password is successfuly verified against hash and type
  */
-bool ArgonWrapper::argon_verify(String password, String hash, String variant) {
+bool Argon2Wrapper::argon2_verify(String password, String hash, String variant) {
   CharString pass_data = password.utf8();
   CharString hash_data = hash.utf8();
   CharString variant_data = variant.utf8();
 
-  Argon2_type hash_type;
+  // Pointer to any of the high-level API methods for verification
+  int (*target_fun)(const char *encoded, const void *pwd, const size_t pwd_len);
 
-  if (strcmp(variant_data.get_data(), "i") == 0) { hash_type = Argon2_i; }
-  else if (strcmp(variant_data.get_data(), "d") == 0) { hash_type = Argon2_d; }
-  else if (strcmp(variant_data.get_data(), "id") == 0) { hash_type = Argon2_id; }
+  if (strcmp(variant_data.get_data(), "i") == 0) { target_fun = argon2i_verify; }
+  else if (strcmp(variant_data.get_data(), "d") == 0) { target_fun = argon2d_verify; }
+  else if (strcmp(variant_data.get_data(), "id") == 0) { target_fun = argon2id_verify; }
   else {
     Godot::print("Error: Please supply a valid hash type for argon_verify. They can be i, d or id.");
     return false;
   }
-  return (argon2_verify(hash_data.get_data(), pass_data.get_data(), pass_data.length(), hash_type) == ARGON2_OK);
+  return (target_fun(hash_data.get_data(), pass_data.get_data(), pass_data.length()) == ARGON2_OK);
 }

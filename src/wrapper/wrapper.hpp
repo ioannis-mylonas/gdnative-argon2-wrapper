@@ -10,19 +10,19 @@
 
 namespace godot {
 
-class ArgonWrapper : public Resource {
-    GODOT_CLASS(ArgonWrapper, Resource)
+class Argon2Wrapper : public Resource {
+    GODOT_CLASS(Argon2Wrapper, Resource)
 
 public:
     static void _register_methods();
 
-    ArgonWrapper();
-    ~ArgonWrapper();
+    Argon2Wrapper();
+    ~Argon2Wrapper();
 
     void _init();
 
-    String argon_hash(String password, String salt, int t_cost, int m_cost, int parallelism, String type);
-    bool argon_verify(String hash, String password, String type);
+    String argon2_hash(String password, String salt, int t_cost, int m_cost, int parallelism, String type);
+    bool argon2_verify(String hash, String password, String type);
 };
 
 }
