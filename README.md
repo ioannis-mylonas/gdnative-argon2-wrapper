@@ -37,6 +37,11 @@ wrapper.argon2_verify("My Password", hashed_pass, "id")
 
 The variants can be: "i", "d" or "id". The rest of the arguments should be self-explanatory but you can consult the wrapper.cpp file to see the implementation, or check the Argon2 GitHub page for more information.
 
+Don't forget to first instance the resource when using it:
+```GDScript
+onready var wrapper = Argon2Wrapper.new()
+```
+
 ## License
 
 Note that the only code I can distribute under the MIT license is the wrapper's. Make sure to check both Argon2's license as well as Godot's.
