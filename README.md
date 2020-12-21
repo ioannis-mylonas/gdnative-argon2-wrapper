@@ -9,7 +9,7 @@ Very basic wrapper around Argon2 for hashing within the Godot Engine.
 5. Follow the godot-cpp instructions to create the .gdns and .gdnlib files;
 6. Drop the resulting files into your project's folder and use it.
 
-Note: Since at the time of writing, the MinGW compilation of GDNative libraries does not work with the included Scons file, the included CMake file adds the necessary flags in accordance to issue [#3463](https://github.com/godotengine/godot-docs/issues/3463) and [#3754](https://github.com/godotengine/godot-docs/issues/3754) (See this issue if you'd rather use Scons).
+Note: Since at the time of writing, the MinGW compilation of GDNative libraries does not work with the included Scons file, the included CMake file adds the necessary flags in accordance to issue [#3463](https://github.com/godotengine/godot-docs/issues/3463) and [#3754](https://github.com/godotengine/godot-docs/issues/3754) (see this issue if you'd rather use Scons).
 
 ## Usage
 
