@@ -22,7 +22,7 @@ String Argon2Wrapper::argon2_hash(String password, String salt, int t_cost, int 
 
 Which when used in GDScript will look something like this:
 ```GDScript
-var hashed_pass = wrapper.argon2_hash("My Password", "A Valid Salt", 2, 64, 2, "id")
+var hashed_pass = wrapper.argon2_hash("My Password", "A Valid Salt", 2, 1<<16, 1, "id")
 ```
 
 And the verify method:
