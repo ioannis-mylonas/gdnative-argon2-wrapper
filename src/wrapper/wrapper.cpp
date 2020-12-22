@@ -61,7 +61,7 @@ String Argon2Wrapper::argon2_hash(String password, String salt, int t_cost, int 
   // Use function pointer to the correct high-level API variant
   int result = target_fun(
     t_cost,
-    1<<m_cost,
+    m_cost,
     parallelism,
     pass_data.get_data(),
     pass_data.length(),
