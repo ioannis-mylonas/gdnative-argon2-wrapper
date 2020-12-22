@@ -1,5 +1,5 @@
 # gdnative-argon2-wrapper
-Very basic wrapper around Argon2 for hashing within the Godot Engine.
+An unofficial, very basic wrapper around Argon2 for hashing within the Godot Engine.
 
 ## Steps to compile
 1. Follow the steps on [godot-cpp](https://github.com/godotengine/godot-cpp) to compile the library and generate the necessary headers;
@@ -44,4 +44,4 @@ onready var wrapper = Argon2Wrapper.new()
 
 ## License
 
-Note that the only code I can distribute under the MIT license is the wrapper's. Make sure to check both Argon2's license as well as Godot's.
+Note that the only code I can distribute under the MIT license is the wrapper's. Neither Argon2 nor Godot are my properties. Make sure to check both Argon2's license as well as Godot's.
