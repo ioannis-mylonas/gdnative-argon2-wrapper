@@ -1,4 +1,4 @@
-#include "wrapper/wrapper.hpp"
+#include "argon2_wrapper.hpp"
 
 using namespace godot;
 
@@ -6,13 +6,9 @@ Argon2Wrapper::Argon2Wrapper() {}
 
 Argon2Wrapper::~Argon2Wrapper() {}
 
-void Argon2Wrapper::_init() {}
-
-void Argon2Wrapper::_register_methods() {
-  register_method("_init", &Argon2Wrapper::_init);
-
-  register_method("argon2_hash", &Argon2Wrapper::argon2_hash);
-  register_method("argon2_verify", &Argon2Wrapper::argon2_verify);
+void Argon2Wrapper::_bind_methods() {
+  ClassDB::bind_method(D_METHOD("argon2_hash", "password", "salt", "t_cost", "m_cost", "parallelism", "variant"), &Argon2Wrapper::argon2_hash);
+  ClassDB::bind_method(D_METHOD("argon2_verify", "password", "hash", "variant"), &Argon2Wrapper::argon2_verify);
 }
 
 /**
@@ -54,7 +50,7 @@ String Argon2Wrapper::argon2_hash(String password, String salt, int t_cost, int 
   } else if (strcmp(variant_data.get_data(), "id") == 0) {
     target_fun = &argon2id_hash_encoded;
   } else {
-    Godot::print("Error: Please supply a valid hash type for argon_hash. They can be i, d or id.");
+    print_error(String("Error: Please supply a valid hash type for argon_hash. They can be i, d or id."));
     return String("");
   }
 
@@ -75,7 +71,7 @@ String Argon2Wrapper::argon2_hash(String password, String salt, int t_cost, int 
   // Return empty string if operation failed, prints said error
   if (result != ARGON2_OK) {
     String error = String(argon2_error_message(result));
-    Godot::print(error);
+    print_error(error);
     return String("");
   }
 
@@ -103,7 +99,7 @@ bool Argon2Wrapper::argon2_verify(String password, String hash, String variant) 
   else if (strcmp(variant_data.get_data(), "d") == 0) { target_fun = argon2d_verify; }
   else if (strcmp(variant_data.get_data(), "id") == 0) { target_fun = argon2id_verify; }
   else {
-    Godot::print("Error: Please supply a valid hash type for argon_verify. They can be i, d or id.");
+    print_error(String("Error: Please supply a valid hash type for argon_verify. They can be i, d or id."));
     return false;
   }
   return (target_fun(hash_data.get_data(), pass_data.get_data(), pass_data.length()) == ARGON2_OK);

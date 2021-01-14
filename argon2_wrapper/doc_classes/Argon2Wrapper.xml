@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="Argon2Wrapper" inherits="Resource" version="3.2">
+	<brief_description>
+        A very basic, unofficial wrapper around Argon2 that uses its high-level API to hash and verify passwords.
+	</brief_description>
+	<description>
+        This class offers basic capabilities for password hashing, using the Argon2 reference implementation.
+        It can use the method [method argon2_hash] to hash a password using a specific variant, with the chosen options or [method argon2_verify] to verify a password against a specified hash and variant.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="argon2_hash">
+			<return type="String">
+			</return>
+			<argument index="0" name="password" type="String">
+			</argument>
+			<argument index="1" name="salt" type="String">
+			</argument>
+			<argument index="2" name="t_cost" type="int">
+			</argument>
+			<argument index="3" name="m_cost" type="int">
+			</argument>
+			<argument index="4" name="parallelism" type="int">
+			</argument>
+			<argument index="5" name="variant" type="String">
+			</argument>
+			<description>
+                Hashes the password according to the parameters passed: First, there's the [code]password[/code] to be used and the [code]salt[/code]. Make sure the [code]salt[/code] isn't too short. The [code]t_cost[/code] is the time cost, in number of iterations. The memory cost is represented by [code]m_cost[/code], in kibibytes. Parallelism is chosen by [code]parallelism[/code]. Finally, the variant is selected by [code]variant[/code] and can be "i", "d" or "id".
+			</description>
+		</method>
+		<method name="argon2_verify">
+			<return type="bool">
+			</return>
+			<argument index="0" name="password" type="String">
+			</argument>
+			<argument index="1" name="hash" type="String">
+			</argument>
+			<argument index="2" name="variant" type="String">
+			</argument>
+			<description>
+                Returns [code]true[/code] if the password is successfuly verified against the specified [code]hash[/code] and [code]variant[/code]. As with [method argon2_hash], [code]variant[/code] can be "i", "d" or "id".
+			</description>
+		</method>
+	</methods>
+	<constants>
+	</constants>
+</class>

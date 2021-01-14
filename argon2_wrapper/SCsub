@@ -1,0 +1,14 @@
+Import('env')
+
+module_env = env.Clone()
+
+env.Append(LIBPATH=["#thirdparty/argon2/lib"])
+env.Append(LIBS=['argon2'])
+
+src_list = ["argon2_wrapper.cpp", "register_types.cpp"]
+module_env.add_source_files(module_env.modules_sources, src_list)
+
+module_env.Append(CPPPATH=["#thirdparty/argon2/include"])
+
+module_env.Append(CCFLAGS=['-O2'])
+module_env.Append(CXXFLAGS=['-std=c++11'])

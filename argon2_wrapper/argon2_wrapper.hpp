@@ -1,9 +1,14 @@
 #pragma once
 
+#include <iostream>
 #include <cstring>
-#include <Godot.hpp>
-#include <Resource.hpp>
 #include <argon2.h>
+
+#include "core/class_db.h"
+#include "core/ustring.h"
+#include "core/print_string.h"
+#include "core/resource.h"
+#include "core/method_bind_ext.gen.inc"
 
 #define DEFAULT_HASH_LEN 32
 #define DEFAULT_ENCODED_LEN 108
@@ -11,15 +16,14 @@
 namespace godot {
 
 class Argon2Wrapper : public Resource {
-    GODOT_CLASS(Argon2Wrapper, Resource)
+    GDCLASS(Argon2Wrapper, Resource)
+
+protected:
+    static void _bind_methods();
 
 public:
-    static void _register_methods();
-
     Argon2Wrapper();
     ~Argon2Wrapper();
-
-    void _init();
 
     String argon2_hash(String password, String salt, int t_cost, int m_cost, int parallelism, String type);
     bool argon2_verify(String hash, String password, String type);
