@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 #include <cstring>
 #include <argon2.h>
 
